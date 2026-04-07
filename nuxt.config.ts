@@ -2,6 +2,7 @@
 import pkg from "./package.json";
 
 export default defineNuxtConfig({
+  ssr: false,
   devtools: { enabled: false },
 
   modules: ["@vueuse/nuxt", "@nuxt/ui", "@nuxt/image", "notivue/nuxt", "@nuxtjs/i18n", "@nuxthub/core"],
@@ -30,7 +31,7 @@ export default defineNuxtConfig({
     notifications: { global: { duration: 3000 } },
   },
 
-  css: ["notivue/notification.css", "notivue/animations.css"],
+  css: [],
 
   runtimeConfig: {
     gqlHost: process.env.GQL_HOST || "",
@@ -40,20 +41,17 @@ export default defineNuxtConfig({
   },
 
   routeRules: {
-    "/": { prerender: true },
     "/categories": { swr: 3600 },
     "/favorites": { swr: 600 },
   },
 
   nitro: {
-    preset: "cloudflare_pages",
     prerender: { routes: ["/sitemap.xml", "/robots.txt"] },
   },
 
   hub: {
     cache: {
-      driver: "cloudflare-kv-binding",
-      binding: "CACHE",
+      driver: "memory",
     },
   },
 
